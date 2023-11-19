@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Loplabbet product retrieval API
+  description: An API that retrieves relevant documents for a given query.
+  version: "1.0.0"
+servers:
+  - url: https://loplabbet-api-de981bd1f4e4.herokuapp.com
+paths:
+  /retrieve:
+    post:
+      operationId: post_retrieve
+      summary: Retrieve relevant documents
+      description: Retrieves documents relevant to the given query.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The query string to retrieve relevant documents for.
+      responses:
+        '200':
+          description: A list of relevant documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    page_content:
+                      type: string
+                    metadata:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        produktnavn: 
+                          type: string
+                        ratings_Stabilitet: 
+                          type: string
+                        ratings_Demping: 
+                          type: string
+                        ratings_Løpsfølelse:
+                          type: string
+                        sex:
+                          type: string
+                        category:
+                          type: string
+                        rank:
+                          type: integer
+
+        '400':
+          description: Bad request
+
+  /.well-known/ai-plugin.json:
+    get:
+      operationId: getPluginManifest
+      summary: Get plugin manifest
+      description: Returns the plugin manifest file.
+      responses:
+        '200':
+          description: Plugin manifest
+          content:
+            text/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+
+  /openapi.yaml:
+    get:
+      operationId: getOpenAPI
+      summary: OpenAPI Specification
+      description: Returns the OpenAPI specification for this API.
+      responses:
+        '200':
+          description: OpenAPI specification in YAML format
+          content:
+            text/yaml:
+              schema:
+                type: string
+        '400':
+          description: Bad request
